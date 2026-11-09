@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090811">
+<title>Meu Girassol 🌻</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 38%,#211a32 0%,#100d1b 48%,#07060c 100%);color:#fff;font-family:Georgia,serif;text-align:center}
+#stars{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff5d6;animation:twinkle 2.5s infinite alternate}
+@keyframes twinkle{from{opacity:.15;transform:scale(.7)}to{opacity:1;transform:scale(1.35)}}
+main{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:42px 18px}
+h1{font-size:clamp(30px,7vw,48px);color:#ffdc78;text-shadow:0 0 22px #e8a92b;margin-bottom:10px}
+.subtitle{color:#d3c8df;font-size:15px;line-height:1.6}
+.garden{width:300px;height:365px;position:relative;margin:12px auto 0}
+.ground{position:absolute;bottom:25px;left:10%;width:80%;height:2px;background:linear-gradient(90deg,transparent,#77964c,transparent)}
+.stem{position:absolute;bottom:26px;left:50%;width:9px;height:0;border-radius:12px;background:linear-gradient(90deg,#28532c,#83b64d);transform:translateX(-50%);transition:height 3.1s ease}
+.garden.grow .stem{height:218px}
+.leaf{position:absolute;width:76px;height:36px;opacity:0;background:linear-gradient(135deg,#9acb58,#28642e);border-radius:100% 0 100% 0;transition:opacity 1s}
+.leaf.left{left:75px;bottom:125px;transform:rotate(13deg)}
+.leaf.right{right:72px;bottom:178px;transform:rotate(190deg)}
+.garden.grow .leaf{opacity:1;transition-delay:1.8s}
+.flower{position:absolute;left:50%;bottom:247px;width:180px;height:180px;transform:translateX(-50%) scale(0);transition:transform 2s cubic-bezier(.2,1.45,.5,1)}
+.garden.bloom .flower{transform:translateX(-50%) scale(1)}
+.petals{position:absolute;inset:0;animation:turn 45s linear infinite}
+@keyframes turn{to{transform:rotate(360deg)}}
+.petal{position:absolute;left:70px;top:2px;width:40px;height:83px;transform-origin:50% 88px;border-radius:55% 55% 45% 45%;background:linear-gradient(90deg,#d98712,#ffe77b 48%,#ffca38);box-shadow:0 0 13px #ffca38aa}
+.flower-core{position:absolute;left:51px;top:51px;width:78px;height:78px;border:5px solid #d99a2e;border-radius:50%;background:radial-gradient(circle,#bd7825 0 12%,#754016 55%,#40200e 100%);box-shadow:0 0 22px #d68a2d99}
+.message{max-width:470px;margin:0 auto 17px;color:#f8e9d0;font-size:18px;line-height:1.85;opacity:0;transform:translateY(18px);transition:opacity 2s,transform 2s}
+.message.show{opacity:1;transform:translateY(0)}
+button{border:1px solid #f6cf69;background:linear-gradient(135deg,#916019,#d99d2d);color:#fff;padding:13px 24px;border-radius:30px;font-size:15px;cursor:pointer;margin:8px;transition:.25s}
+button:hover{transform:translateY(-2px);box-shadow:0 0 20px #d99d2d88}
+.music{width:min(360px,92vw);margin:17px auto 0;padding:16px;border:1px solid #ffffff20;border-radius:18px;background:#ffffff0b;backdrop-filter:blur(8px)}
+.music .track{color:#ffdc78;font-size:17px;margin-bottom:5px}
+.music p{color:#c9bfd3;font-size:13px;margin-bottom:10px}
+audio{width:100%;height:38px}
+footer{margin-top:22px;color:#8d829b;font-size:12px}
+@media(max-width:380px){.garden{transform:scale(.9);margin:-5px auto}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="stars" aria-hidden="true"></div>
+<main>
+  <h1>Meu Girassol 🌻</h1>
+  <p class="subtitle">Algumas coisas bonitas florescem no tempo certo...</p>
+
+  <div class="garden" id="garden" aria-label="Animação de um girassol florescendo">
+    <div class="ground"></div>
+    <div class="stem"></div>
+    <div class="leaf left"></div>
+    <div class="leaf right"></div>
+    <div class="flower">
+      <div class="petals" id="petals"></div>
+      <div class="flower-core"></div>
+    </div>
+  </div>
+
+  <button id="bloomButton">Faça meu girassol florescer 🌻</button>
+
+  <div class="message" id="message">
+    Assim como um girassol procura a luz, você ilumina meus dias de um jeito que palavras nem sempre conseguem explicar.
+    <br><br>
+    Entre tantas flores no mundo, meu coração escolheria você.
+    <br><br>
+    Você é meu girassol. ❤️
+  </div>
+
+  <section class="music">
+    <div class="track">♪ Poeta do Amor</div>
+    <p>Uma música feita especialmente para você.</p>
+    <audio controls loop preload="metadata">
+      <source src="Poeta%20do%20Amor.m4a" type="audio/mp4">
+      Seu navegador não conseguiu reproduzir este áudio.
+    </audio>
+  </section>
+
+  <button id="resetButton">Florescer novamente ↻</button>
+  <footer>Feito com carinho, especialmente para você.</footer>
+</main>
+<script>
+const stars=document.getElementById('stars');
+for(let i=0;i<115;i++){
+  const s=document.createElement('span');s.className='star';
+  s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=Math.random()*3+'s';s.style.opacity=Math.random();
+  stars.appendChild(s);
+}
+const petals=document.getElementById('petals');
+for(let i=0;i<16;i++){
+  const p=document.createElement('span');p.className='petal';
+  p.style.transform=`rotate(${i*22.5}deg)`;
+  petals.appendChild(p);
+}
+const garden=document.getElementById('garden');
+const message=document.getElementById('message');
+let timers=[];
+function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+function bloom(){
+  clearTimers();garden.classList.remove('grow','bloom');message.classList.remove('show');
+  void garden.offsetWidth;
+  garden.classList.add('grow');
+  timers.push(setTimeout(()=>garden.classList.add('bloom'),1900));
+  timers.push(setTimeout(()=>message.classList.add('show'),3700));
+}
+function resetFlower(){
+  clearTimers();garden.classList.remove('grow','bloom');message.classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('bloomButton').addEventListener('click',bloom);
+document.getElementById('resetButton').addEventListener('click',resetFlower);
+</script>
+</body>
+</html>
